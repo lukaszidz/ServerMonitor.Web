@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Reflection;
+using Autofac;
+using Autofac.Integration.WebApi;
+using MediatR;
 using System.Web.Http;
-using System.Web.Routing;
+using ServerMonitor.Helpers;
 
 namespace ServerMonitor
 {
@@ -12,6 +12,37 @@ namespace ServerMonitor
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            var builder = new ContainerBuilder();
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            builder
+                .RegisterType<Mediator>()
+                .As<IMediator>()
+                .InstancePerRequest();
+
+            builder.Register<ServiceFactory>(context =>
+            {
+                var c = context.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
+
+            var mediatorOpenTypes = new[]
+            {
+                typeof(IRequestHandler<,>),
+                typeof(INotificationHandler<>),
+            };
+
+            foreach (var mediatorOpenType in mediatorOpenTypes)
+            {
+                builder
+                    .RegisterAssemblyTypes(typeof(BaseApi).GetTypeInfo().Assembly)
+                    .AsClosedTypesOf(mediatorOpenType)
+                    .AsImplementedInterfaces();
+            }
+
+            var container = builder.Build();
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
