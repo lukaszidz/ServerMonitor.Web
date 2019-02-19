@@ -114,6 +114,7 @@
     <Content Include="Web.Base.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HardwareController.cs" />
     <Compile Include="Controllers\IisController.cs" />
