@@ -1,0 +1,35 @@
+{
+  "appName": "ServerMonitor",
+  "userName": "pc\\username",
+  "password": "password",
+  "releaseLocation": "c:\\inetpub\\wwwroot\\ServerMonitor",
+  "dataSource": "localhost\\SQL",
+  "database": "Automation",
+  "dbUser": "sa",
+  "dbPassword": "password",
+  "webConfig": {
+    "hardwareList": [
+      {
+        "name": "Google",
+        "url": "http://localhost/ServerMonitor/"
+      }
+    ],
+    "links": [
+      {
+        "type": "General",
+        "name": "Google",
+        "url": "https://www.google.com/"
+      }
+    ],
+    "dirsToCheckSize": ["C:\\Logs", "C:\\inetpub\\wwwroot"],
+    "scheduledTasks": ["CleanBuilds", "CleanUpBuilds"],
+    "commonAppName": ".Api.Entity",
+    "cacheInSeconds": 3,
+    "isOracleInstanceManagerEnabled": true,
+    "cleaner": {
+      "useWhiteList": true,
+      "beforeDays": 2,
+      "excludeNLast": 1
+    }
+  }
+}
