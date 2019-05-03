@@ -17,6 +17,7 @@ tools
 
 packages
 .vs
+.idea
 ServerMonitor/ServerMonitor.csproj.user
 ServerMonitor/ServerMonitor.csproj.vspscc
 ServerMonitor/bundle.js
@@ -26,8 +27,10 @@ ServerMonitor/styles.css.map
 ServerMonitor/styles.css
 ServerMonitor/styles.css.gz
 ServerMonitor/index.html
-ServerMonitor/bin
-ServerMonitor/obj
 ServerMonitor/ServerMonitor.db
 ServerMonitor/settings.json
 ServerMonitor/whitelist.json
+
+*/bin
+*/obj
+*.user
