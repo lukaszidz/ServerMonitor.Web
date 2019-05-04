@@ -33,11 +33,17 @@ class Hardware extends Component {
   }
 
   render() {
-    const components = this.props.data.map(x => (
-      <TabPane tab={x.key} key={x.key}>
-        <HardwareItem item={x} />
-      </TabPane>
-    ));
+    const machines = this.props.data ? groupBy(this.props.data, "key") : [];
+    const machinesKeys = Object.keys(machines);
+    const components = machinesKeys.map(x => 
+        <TabPane tab={x} key={x}>
+          <HardwareItem item={
+            groupBy(machines[x].reduce(function(rd, v) {
+              rd.push(v.data);
+              return rd;
+          }, []).flatMap(x => x), "key")} />
+        </TabPane>
+    );
     return (
       <PageVisibility onChange={this.handleVisibilityChange}>
         <Tabs tabPosition="left" style={{ padding: 5 }} >
@@ -47,6 +53,13 @@ class Hardware extends Component {
     );
   }
 }
+
+const groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
 
 const mapStateToProps = state => ({
   data: state.hardware

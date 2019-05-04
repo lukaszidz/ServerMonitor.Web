@@ -3,6 +3,8 @@ import filesize from "filesize";
 import dateformat from "dateformat";
 import * as types from "../constants/actionTypes";
 
+let arr = [];
+
 const diskColumns = [
   { Header: "Path", accessor: "path" },
   {
@@ -173,7 +175,8 @@ function servicesReducer(state = initialState, action) {
 function hardwareReducer(state = hardwareInitialState, action) {
   switch (action.type) {
     case types.GET_HARDWARE_DATA_SUCCESS:
-      return [...action.data.data];
+      arr = [...arr, action.data.data[0]]; 
+      return arr;
     default:
       return state;
   }

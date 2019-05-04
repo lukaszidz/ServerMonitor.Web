@@ -1,11 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import { Row, Col } from 'antd';
 import Chart from './Chart/chart';
 
 const HardwareItem = ({ item }) => {
-  const childs = item.data
-    .map(x => <Col key={x.key} span={8}><Chart title={x.key} {...x} /></Col>);
+  const keys = Object.keys(item);
+  const childs = keys
+    .map(key =>
+     <Col key={key} span={8}>
+      <Chart title={key} values={item[key]} />
+    </Col>);
   return (
     <Row>
       {childs}
@@ -19,7 +23,8 @@ HardwareItem.propTypes = {
     key: PropTypes.string.isRequired,
     data: PropTypes.arrayOf(PropTypes.shape({
       key: PropTypes.string,
-      Value: PropTypes.string
+      array: PropTypes.arrayOf(number),
+      Value: PropTypes.string,
     }).isRequired)
   }).isRequired
 };
