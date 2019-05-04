@@ -7,6 +7,7 @@ import { getHardwareAction } from '../actions/actions';
 import HardwareItem from './HardwareItem';
 
 const { TabPane } = Tabs;
+const keyPropName = "key";
 
 class Hardware extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Hardware extends Component {
   }
 
   render() {
-    const machines = this.props.data ? groupBy(this.props.data, "key") : [];
+    const machines = this.props.data ? groupBy(this.props.data.flatMap(x => x), keyPropName) : [];
     const machinesKeys = Object.keys(machines);
     const components = machinesKeys.map(x => 
         <TabPane tab={x} key={x}>
@@ -41,7 +42,7 @@ class Hardware extends Component {
             groupBy(machines[x].reduce(function(rd, v) {
               rd.push(v.data);
               return rd;
-          }, []).flatMap(x => x), "key")} />
+          }, []).flatMap(x => x), keyPropName)} />
         </TabPane>
     );
     return (
